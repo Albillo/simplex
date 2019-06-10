@@ -12,13 +12,14 @@ import javafx.scene.control.TextField;
 public class FXMLDocumentController implements Initializable {
 
     @FXML   private ComboBox ComboBoxMaxMin;
-    @FXML   private TextField TextZXUno, TextZXDos, TextZXTres, TextZXCuatro;
+    @FXML   private TextField TextZXUno, TextZXDos, TextZXTres;
     @FXML   private TextField TextFUnoXUno, TextFUnoXDos, TextFUnoXTres, TextFUnoXCuatro;
     @FXML   private TextField TextFDosXUno, TextFDosXDos, TextFDosXTres, TextFDosXCuatro;
     @FXML   private TextField TextFTresXUno, TextFTresXDos, TextFTresXTres, TextFTresXCuatro;
     
     // Matriz global de dimencion 7 * 4
     double MatrizEntrante[][] = new double[4][7];
+    double FilaPiboteEntrePuntoPibote[] = new double[7];
     
     private void SetTextCombo() {
         // Añadimos texto al ComboBox
@@ -31,7 +32,7 @@ public class FXMLDocumentController implements Initializable {
             Alerta("Selecciona una opcion.\nMaximizar o Minimizar");
             return;
         }
-        if( ValidarTextos() )
+        // if( ValidarTextos() )
             if("Maximizar".equals(seleccionado))
                 Maximizar();
             else
@@ -39,9 +40,59 @@ public class FXMLDocumentController implements Initializable {
     }
     
     void Maximizar(){
-        for (double[] MatrizEntrante1 : MatrizEntrante) {
-            for (int j = 0; j < MatrizEntrante1.length; j++) {
-                System.out.print(MatrizEntrante1[j] + ", ");
+        int columna_pibote = 0;
+        int fila_pibote = 0;
+        // Igualamos los valores de Z 
+        for (int j = 0; j < 3; j++) {
+            MatrizEntrante[0][j] = MatrizEntrante[0][j] * -1;
+        }
+        
+        // Obtenemos columna pibote
+        double mas_negativo = MatrizEntrante[0][0];
+        for (int j = 0; j < MatrizEntrante.length; j++) {
+            if(MatrizEntrante[0][j] < mas_negativo){ // 
+                mas_negativo = MatrizEntrante[0][j];
+                columna_pibote = j;
+            }
+        }
+        
+        // Obtenemos fila pibote
+        double menor = 999999999;
+        for (int i = 0; i < MatrizEntrante.length; i++) {
+            // Recorremos nuestra matriz sin tocar la fila pibote
+            if(i != columna_pibote){
+                // Filas que sean mayor a cero
+                if(MatrizEntrante[i][columna_pibote] > 0){
+                    // Resultado entre la columna pibote
+                    if(MatrizEntrante[i][6] / MatrizEntrante[i][columna_pibote] < menor){
+                        menor = MatrizEntrante[i][6] / MatrizEntrante[i][columna_pibote];
+                        fila_pibote = i;
+                    }
+                }
+            }
+        }
+
+        // Nueva fila pibote
+        for(int j = 0; j < MatrizEntrante[fila_pibote].length; j++)
+            FilaPiboteEntrePuntoPibote[j] = MatrizEntrante[fila_pibote][j] / MatrizEntrante[fila_pibote][columna_pibote];
+        for(int j = 0; j < MatrizEntrante[fila_pibote].length; j++)
+            MatrizEntrante[fila_pibote][j] = FilaPiboteEntrePuntoPibote[j];
+        
+        // Recoreremos y cambiaremos lo valores sin tocar la fila pivote
+        for(int i = 0; i < MatrizEntrante.length; i++) {
+            for(int j = 0; j < MatrizEntrante[i].length; j++) {
+                if(i != fila_pibote){
+
+                    // Multiplicamos nuestra fila actual con nuestra columna pivote, para obtener el resultanto a cero para nuestra fila actual con nuestra columna pivote
+                    double valorColumnaPivote = MatrizEntrante[i][columna_pibote] * -1;
+
+                    FilaPiboteEntrePuntoPibote[j] = (valorColumnaPivote * MatrizEntrante[fila_pibote][j]) + (MatrizEntrante[i][j]);
+                }
+            }
+            for(int j = 0; j < MatrizEntrante[i].length; j++) {
+                if(i != fila_pibote)
+                    MatrizEntrante[i][j] = FilaPiboteEntrePuntoPibote[j];
+                System.out.print(MatrizEntrante[i][j]+", ");
             }
             System.out.println(" ");
         }
@@ -58,10 +109,6 @@ public class FXMLDocumentController implements Initializable {
         }
         if("".equals(TextZXTres.getText())){
             Alerta("Requiero un valor para Z en x3");
-            return false;
-        }
-        if("".equals(TextZXCuatro.getText())){
-            Alerta("Requiero un valor para Z");
             return false;
         }
         if("".equals(TextFUnoXUno.getText())){
@@ -113,10 +160,10 @@ public class FXMLDocumentController implements Initializable {
             return false;
         }
         
+        // Pasamos los valores del TextField a la Matriz
         MatrizEntrante[0][0]=Integer.parseInt(TextZXUno.getText());
         MatrizEntrante[0][1]=Integer.parseInt(TextZXDos.getText());
         MatrizEntrante[0][2]=Integer.parseInt(TextZXTres.getText());
-        MatrizEntrante[0][6]=Integer.parseInt(TextZXCuatro.getText());
 
         MatrizEntrante[1][0]=Integer.parseInt(TextFUnoXUno.getText());
         MatrizEntrante[1][1]=Integer.parseInt(TextFUnoXDos.getText());
@@ -147,5 +194,28 @@ public class FXMLDocumentController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         SetTextCombo();
+
+        MatrizEntrante[0][0]=2;
+        MatrizEntrante[0][1]=2;
+        MatrizEntrante[0][2]=-3;
+
+        MatrizEntrante[1][0]=-1;
+        MatrizEntrante[1][1]=1;
+        MatrizEntrante[1][2]=1;
+        MatrizEntrante[1][6]=4;
+
+        MatrizEntrante[2][0]=2;
+        MatrizEntrante[2][1]=-1;
+        MatrizEntrante[2][2]=1;
+        MatrizEntrante[2][6]=2;
+
+        MatrizEntrante[3][0]=1;
+        MatrizEntrante[3][1]=1;
+        MatrizEntrante[3][2]=3;
+        MatrizEntrante[3][6]=12;
+        
+        MatrizEntrante[1][3]=1;
+        MatrizEntrante[2][4]=1;
+        MatrizEntrante[3][5]=1;
     }
 }
