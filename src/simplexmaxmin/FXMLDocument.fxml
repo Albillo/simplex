@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="364.0" prefWidth="658.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/10.0.1" fx:controller="simplexmaxmin.FXMLDocumentController">
+   <children>
+      <Label layoutX="14.0" layoutY="14.0" text="Z=">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <TextField fx:id="TextZXUno" layoutX="48.0" layoutY="14.0" prefHeight="25.0" prefWidth="48.0">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="TextZXDos" layoutX="128.0" layoutY="14.0" prefHeight="25.0" prefWidth="48.0">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="TextZXTres" layoutX="211.0" layoutY="14.0" prefHeight="25.0" prefWidth="48.0">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </TextField>
+      <Label layoutX="96.0" layoutY="16.0" text="X1">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="178.0" layoutY="16.0" text="X2">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="259.0" layoutY="16.0" text="X3">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <TextField fx:id="TextFUnoXUno" layoutX="48.0" layoutY="66.0" prefHeight="25.0" prefWidth="48.0">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="TextFUnoXDos" layoutX="128.0" layoutY="66.0" prefHeight="25.0" prefWidth="48.0">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="TextFUnoXTres" layoutX="211.0" layoutY="66.0" prefHeight="25.0" prefWidth="48.0">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </TextField>
+      <Label layoutX="96.0" layoutY="68.0" text="X1">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="178.0" layoutY="68.0" text="X2">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="259.0" layoutY="68.0" text="X3">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <TextField fx:id="TextFDosXUno" layoutX="48.0" layoutY="114.0" prefHeight="25.0" prefWidth="48.0">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="TextFDosXDos" layoutX="128.0" layoutY="114.0" prefHeight="25.0" prefWidth="48.0">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="TextFDosXTres" layoutX="211.0" layoutY="114.0" prefHeight="25.0" prefWidth="48.0">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </TextField>
+      <Label layoutX="96.0" layoutY="116.0" text="X1">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="178.0" layoutY="116.0" text="X2">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="259.0" layoutY="116.0" text="X3">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <TextField fx:id="TextFTresXUno" layoutX="48.0" layoutY="159.0" prefHeight="25.0" prefWidth="48.0">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="TextFTresXDos" layoutX="128.0" layoutY="159.0" prefHeight="25.0" prefWidth="48.0">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="TextFTresXTres" layoutX="211.0" layoutY="159.0" prefHeight="25.0" prefWidth="48.0">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </TextField>
+      <Label layoutX="96.0" layoutY="161.0" text="X1">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="178.0" layoutY="161.0" text="X2">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="259.0" layoutY="161.0" text="X3">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="ComboBoxMaxMin" layoutX="491.0" layoutY="14.0" prefWidth="150.0" promptText="Max / Min" />
+      <Button layoutX="491.0" layoutY="54.0" mnemonicParsing="false" onAction="#Empezar" prefHeight="29.0" prefWidth="150.0" text="Empezar" />
+      <Label layoutX="14.0" layoutY="68.0" text="F1=">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="14.0" layoutY="116.0" text="F2=">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="14.0" layoutY="161.0" text="F3=">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <TextField fx:id="TextZXCuatro" layoutX="321.0" layoutY="14.0" prefHeight="25.0" prefWidth="48.0">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="TextFUnoXCuatro" layoutX="321.0" layoutY="66.0" prefHeight="25.0" prefWidth="48.0">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="TextFDosXCuatro" layoutX="321.0" layoutY="114.0" prefHeight="25.0" prefWidth="48.0">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="TextFTresXCuatro" layoutX="321.0" layoutY="159.0" prefHeight="25.0" prefWidth="48.0">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </TextField>
+   </children>
+</AnchorPane>
