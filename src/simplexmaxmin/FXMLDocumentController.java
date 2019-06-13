@@ -32,7 +32,7 @@ public class FXMLDocumentController implements Initializable {
             Alerta("Selecciona una opcion.\nMaximizar o Minimizar");
             return;
         }
-        // if( ValidarTextos() )
+        if( ValidarTextos() )
             if("Maximizar".equals(seleccionado))
                 Maximizar();
             else
