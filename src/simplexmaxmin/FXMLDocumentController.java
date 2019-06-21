@@ -32,7 +32,7 @@ public class FXMLDocumentController implements Initializable {
             Alerta("Selecciona una opcion.\nMaximizar o Minimizar");
             return;
         }
-        if( ValidarTextos() )
+//        if( ValidarTextos() )
             if("Maximizar".equals(seleccionado))
                 Maximizar();
             else
@@ -42,59 +42,78 @@ public class FXMLDocumentController implements Initializable {
     void Maximizar(){
         int columna_pibote = 0;
         int fila_pibote = 0;
+        boolean HayPositivoUno = false, HayPositivoDos = false, HayPositivoTres = false;
         // Igualamos los valores de Z 
         for (int j = 0; j < 3; j++) {
             MatrizEntrante[0][j] = MatrizEntrante[0][j] * -1;
         }
         
-        // Obtenemos columna pibote
-        double mas_negativo = MatrizEntrante[0][0];
-        for (int j = 0; j < MatrizEntrante.length; j++) {
-            if(MatrizEntrante[0][j] < mas_negativo){ // 
-                mas_negativo = MatrizEntrante[0][j];
-                columna_pibote = j;
+        while(HayPositivoUno != true || HayPositivoDos != true || HayPositivoTres != true ){
+
+            // Obtenemos columna pibote
+            double mas_negativo = MatrizEntrante[0][0];
+            for (int j = 0; j < MatrizEntrante.length; j++) {
+                if(MatrizEntrante[0][j] < mas_negativo){ // 
+                    mas_negativo = MatrizEntrante[0][j];
+                    columna_pibote = j;
+                }
             }
-        }
-        
-        // Obtenemos fila pibote
-        double menor = 999999999;
-        for (int i = 0; i < MatrizEntrante.length; i++) {
-            // Recorremos nuestra matriz sin tocar la fila pibote
-            if(i != columna_pibote){
-                // Filas que sean mayor a cero
-                if(MatrizEntrante[i][columna_pibote] > 0){
-                    // Resultado entre la columna pibote
-                    if(MatrizEntrante[i][6] / MatrizEntrante[i][columna_pibote] < menor){
-                        menor = MatrizEntrante[i][6] / MatrizEntrante[i][columna_pibote];
-                        fila_pibote = i;
+
+            // Obtenemos fila pibote
+            double menor = 999999999;
+            for (int i = 0; i < MatrizEntrante.length; i++) {
+                // Recorremos nuestra matriz sin tocar la fila pibote
+                if(i != columna_pibote){
+                    // Filas que sean mayor a cero
+                    if(MatrizEntrante[i][columna_pibote] > 0){
+                        // Resultado entre la columna pibote
+                        if(MatrizEntrante[i][6] / MatrizEntrante[i][columna_pibote] < menor){
+                            menor = MatrizEntrante[i][6] / MatrizEntrante[i][columna_pibote];
+                            fila_pibote = i;
+                        }
                     }
                 }
             }
-        }
 
-        // Nueva fila pibote
-        for(int j = 0; j < MatrizEntrante[fila_pibote].length; j++)
-            FilaPiboteEntrePuntoPibote[j] = MatrizEntrante[fila_pibote][j] / MatrizEntrante[fila_pibote][columna_pibote];
-        for(int j = 0; j < MatrizEntrante[fila_pibote].length; j++)
-            MatrizEntrante[fila_pibote][j] = FilaPiboteEntrePuntoPibote[j];
-        
-        // Recoreremos y cambiaremos lo valores sin tocar la fila pivote
-        for(int i = 0; i < MatrizEntrante.length; i++) {
-            for(int j = 0; j < MatrizEntrante[i].length; j++) {
-                if(i != fila_pibote){
+            // Nueva fila pibote
+            for(int j = 0; j < MatrizEntrante[fila_pibote].length; j++)
+                FilaPiboteEntrePuntoPibote[j] = MatrizEntrante[fila_pibote][j] / MatrizEntrante[fila_pibote][columna_pibote];
+            for(int j = 0; j < MatrizEntrante[fila_pibote].length; j++)
+                MatrizEntrante[fila_pibote][j] = FilaPiboteEntrePuntoPibote[j];
 
-                    // Multiplicamos nuestra fila actual con nuestra columna pivote, para obtener el resultanto a cero para nuestra fila actual con nuestra columna pivote
-                    double valorColumnaPivote = MatrizEntrante[i][columna_pibote] * -1;
+            // Recoreremos y cambiaremos lo valores sin tocar la fila pivote
+            for(int i = 0; i < MatrizEntrante.length; i++) {
+                for(int j = 0; j < MatrizEntrante[i].length; j++) {
+                    if(i != fila_pibote){
 
-                    FilaPiboteEntrePuntoPibote[j] = (valorColumnaPivote * MatrizEntrante[fila_pibote][j]) + (MatrizEntrante[i][j]);
+                        // Multiplicamos nuestra fila actual con nuestra columna pivote, para obtener el resultanto a cero para nuestra fila actual con nuestra columna pivote
+                        double valorColumnaPivote = MatrizEntrante[i][columna_pibote] * -1;
+
+                        FilaPiboteEntrePuntoPibote[j] = (valorColumnaPivote * MatrizEntrante[fila_pibote][j]) + (MatrizEntrante[i][j]);
+                    }
                 }
+                for(int j = 0; j < MatrizEntrante[i].length; j++) {
+                    if(i != fila_pibote)
+                        MatrizEntrante[i][j] = FilaPiboteEntrePuntoPibote[j];
+                    System.out.print(MatrizEntrante[i][j]+", ");
+                }
+                System.out.println("");
             }
-            for(int j = 0; j < MatrizEntrante[i].length; j++) {
-                if(i != fila_pibote)
-                    MatrizEntrante[i][j] = FilaPiboteEntrePuntoPibote[j];
-                System.out.print(MatrizEntrante[i][j]+", ");
-            }
-            System.out.println(" ");
+            System.out.println("\n");
+            if(MatrizEntrante[0][1] < 0)
+                HayPositivoUno = false;
+            else 
+                HayPositivoUno = true;
+            
+            if(MatrizEntrante[0][2] < 0)
+                HayPositivoDos = false;
+            else
+                HayPositivoDos = true;
+            
+            if(MatrizEntrante[0][3] < 0)
+                HayPositivoTres = false;
+            else
+                HayPositivoTres = true;
         }
     }
     
