@@ -20,9 +20,10 @@ public class FXMLDocumentController implements Initializable {
     // Matriz global de dimencion 7 * 4
     double MatrizEntrante[][] = new double[4][7];
     double FilaPiboteEntrePuntoPibote[] = new double[7];
+//    int EquisFilaPibote[] = new int [2];
     
+    // Añadimos texto al ComboBox
     private void SetTextCombo() {
-        // Añadimos texto al ComboBox
         ComboBoxMaxMin.getItems().addAll( "Maximizar", "Minimizar" );
     }
 
@@ -43,11 +44,14 @@ public class FXMLDocumentController implements Initializable {
         int columna_pibote = 0;
         int fila_pibote = 0;
         boolean HayPositivoUno = false, HayPositivoDos = false, HayPositivoTres = false;
+        byte posicion = 0;
+        
         // Igualamos los valores de Z 
         for (int j = 0; j < 3; j++) {
             MatrizEntrante[0][j] = MatrizEntrante[0][j] * -1;
         }
         
+        // Iterar hasta que no existan negativos en Z
         while(HayPositivoUno != true || HayPositivoDos != true || HayPositivoTres != true ){
 
             // Obtenemos columna pibote
@@ -70,16 +74,21 @@ public class FXMLDocumentController implements Initializable {
                         if(MatrizEntrante[i][6] / MatrizEntrante[i][columna_pibote] < menor){
                             menor = MatrizEntrante[i][6] / MatrizEntrante[i][columna_pibote];
                             fila_pibote = i;
+//                            EquisFilaPibote[posicion] = fila_pibote;
                         }
                     }
                 }
             }
+            posicion++;
 
             // Nueva fila pibote
             for(int j = 0; j < MatrizEntrante[fila_pibote].length; j++)
                 FilaPiboteEntrePuntoPibote[j] = MatrizEntrante[fila_pibote][j] / MatrizEntrante[fila_pibote][columna_pibote];
             for(int j = 0; j < MatrizEntrante[fila_pibote].length; j++)
                 MatrizEntrante[fila_pibote][j] = FilaPiboteEntrePuntoPibote[j];
+            
+            // Imprimimos alineadamente los resultados
+            System.out.println("X1\tX2\tX3\tS1\tS2\tS3\tZ");
 
             // Recoreremos y cambiaremos lo valores sin tocar la fila pivote
             for(int i = 0; i < MatrizEntrante.length; i++) {
@@ -92,29 +101,43 @@ public class FXMLDocumentController implements Initializable {
                         FilaPiboteEntrePuntoPibote[j] = (valorColumnaPivote * MatrizEntrante[fila_pibote][j]) + (MatrizEntrante[i][j]);
                     }
                 }
+                
+                // Imprimimos resultados
                 for(int j = 0; j < MatrizEntrante[i].length; j++) {
                     if(i != fila_pibote)
                         MatrizEntrante[i][j] = FilaPiboteEntrePuntoPibote[j];
-                    System.out.print(MatrizEntrante[i][j]+", ");
+
+                    System.out.print(round(MatrizEntrante[i][j], 2)+"\t");
                 }
                 System.out.println("");
             }
-            System.out.println("\n");
-            if(MatrizEntrante[0][1] < 0)
-                HayPositivoUno = false;
-            else 
-                HayPositivoUno = true;
-            
-            if(MatrizEntrante[0][2] < 0)
-                HayPositivoDos = false;
-            else
-                HayPositivoDos = true;
-            
-            if(MatrizEntrante[0][3] < 0)
-                HayPositivoTres = false;
-            else
-                HayPositivoTres = true;
+            System.out.println("");
+            HayPositivoUno = MatrizEntrante[0][1] >= 0;
+            HayPositivoDos = MatrizEntrante[0][2] >= 0;
+            HayPositivoTres = MatrizEntrante[0][3] >= 0;
         }
+        
+//        System.out.println(EquisFilaPibote[0]);
+//        System.out.println(EquisFilaPibote[1]);
+        for(int i = 0; i < MatrizEntrante.length; i++){
+            if(MatrizEntrante[i][0] == 1)
+                System.out.print("X1: "+ MatrizEntrante[i][6]);
+            if(MatrizEntrante[i][1] == 1)
+                System.out.print("\tX2: "+ MatrizEntrante[i][6]);
+            if(MatrizEntrante[i][2] == 1)
+                System.out.print("\tX3: "+ MatrizEntrante[i][6]);
+        }
+        System.out.print("\tZ: "+ MatrizEntrante[0][6]);
+    }
+    
+    // Redondear a n digitos un valor double
+    double round(double value, int places) {
+        if (places < 0) throw new IllegalArgumentException();
+
+        long factor = (long) Math.pow(10, places);
+        value = value * factor;
+        long tmp = Math.round(value);
+        return (double) tmp / factor;
     }
     
     @FXML private Boolean ValidarTextos(){
