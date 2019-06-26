@@ -11,7 +11,7 @@ import javafx.scene.control.TextField;
 /** @author DELL */
 public class FXMLDocumentController implements Initializable {
 
-    @FXML   private ComboBox ComboBoxMaxMin;
+    @FXML   private ComboBox ComboBoxMaxMin, FUno, FDos, FTres;
     @FXML   private TextField TextZXUno, TextZXDos, TextZXTres;
     @FXML   private TextField TextFUnoXUno, TextFUnoXDos, TextFUnoXTres, TextFUnoXCuatro;
     @FXML   private TextField TextFDosXUno, TextFDosXDos, TextFDosXTres, TextFDosXCuatro;
@@ -20,11 +20,13 @@ public class FXMLDocumentController implements Initializable {
     // Matriz global de dimencion 7 * 4
     double MatrizEntrante[][] = new double[4][7];
     double FilaPiboteEntrePuntoPibote[] = new double[7];
-//    int EquisFilaPibote[] = new int [2];
     
     // Añadimos texto al ComboBox
     private void SetTextCombo() {
         ComboBoxMaxMin.getItems().addAll( "Maximizar", "Minimizar" );
+        FUno.getItems().addAll( ">=", "=", "=<" );
+        FDos.getItems().addAll( ">=", "=", "=<" );
+        FTres.getItems().addAll( ">=", "=", "=<" );
     }
 
     @FXML private void Empezar() {
@@ -37,7 +39,16 @@ public class FXMLDocumentController implements Initializable {
             if("Maximizar".equals(seleccionado))
                 Maximizar();
             else
-                Alerta("Minimizar");
+                Minimizar();
+    }
+    
+    void Minimizar(){
+        int columna_pibote = 0;
+        int fila_pibote = 0;
+        boolean HayPositivoUno = false, HayPositivoDos = false, HayPositivoTres = false;
+        byte posicion = 0;
+        
+        
     }
     
     void Maximizar(){
@@ -74,7 +85,6 @@ public class FXMLDocumentController implements Initializable {
                         if(MatrizEntrante[i][6] / MatrizEntrante[i][columna_pibote] < menor){
                             menor = MatrizEntrante[i][6] / MatrizEntrante[i][columna_pibote];
                             fila_pibote = i;
-//                            EquisFilaPibote[posicion] = fila_pibote;
                         }
                     }
                 }
@@ -116,9 +126,7 @@ public class FXMLDocumentController implements Initializable {
             HayPositivoDos = MatrizEntrante[0][2] >= 0;
             HayPositivoTres = MatrizEntrante[0][3] >= 0;
         }
-        
-//        System.out.println(EquisFilaPibote[0]);
-//        System.out.println(EquisFilaPibote[1]);
+
         for(int i = 0; i < MatrizEntrante.length; i++){
             if(MatrizEntrante[i][0] == 1)
                 System.out.print("X1: "+ MatrizEntrante[i][6]);
@@ -237,6 +245,31 @@ public class FXMLDocumentController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         SetTextCombo();
 
+        // Minimizar
+        MatrizEntrante[0][0]=5;
+        MatrizEntrante[0][1]=1;
+        MatrizEntrante[0][2]=-3;
+
+        MatrizEntrante[1][0]=3;
+        MatrizEntrante[1][1]=1;
+        MatrizEntrante[1][2]=-1;
+        MatrizEntrante[1][6]=4;
+
+        MatrizEntrante[2][0]=1;
+        MatrizEntrante[2][1]=1;
+        MatrizEntrante[2][2]=1;
+        MatrizEntrante[2][6]=2;
+
+        MatrizEntrante[3][0]=2;
+        MatrizEntrante[3][1]=0;
+        MatrizEntrante[3][2]=2;
+        MatrizEntrante[3][6]=5;
+        
+        MatrizEntrante[1][3]=1;
+        MatrizEntrante[2][4]=1;
+        MatrizEntrante[3][5]=1;
+        
+        /* Maximizar
         MatrizEntrante[0][0]=2;
         MatrizEntrante[0][1]=2;
         MatrizEntrante[0][2]=-3;
@@ -259,5 +292,6 @@ public class FXMLDocumentController implements Initializable {
         MatrizEntrante[1][3]=1;
         MatrizEntrante[2][4]=1;
         MatrizEntrante[3][5]=1;
+        */
     }
 }
