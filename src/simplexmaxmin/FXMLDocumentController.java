@@ -364,7 +364,7 @@ public class FXMLDocumentController implements Initializable {
         SetTextCombo();
 
         // Minimizar
-        MatrizEntrante[0][0]=-5;
+        /*MatrizEntrante[0][0]=-5;
         MatrizEntrante[0][1]=-4;
         MatrizEntrante[0][2]=0;
 
@@ -381,32 +381,30 @@ public class FXMLDocumentController implements Initializable {
         MatrizEntrante[3][0]=5;
         MatrizEntrante[3][1]=10;
         MatrizEntrante[3][2]=0;
-        MatrizEntrante[3][6]=60;
+        MatrizEntrante[3][6]=60;*/
         
-        /*
         // Maximizar
         MatrizEntrante[0][0]=2;
-        MatrizEntrante[0][1]=2;
-        MatrizEntrante[0][2]=-3;
+        MatrizEntrante[0][1]=1;
+        MatrizEntrante[0][2]=3;
 
-        MatrizEntrante[1][0]=-1;
-        MatrizEntrante[1][1]=1;
-        MatrizEntrante[1][2]=1;
-        MatrizEntrante[1][6]=4;
+        MatrizEntrante[1][0]=5;
+        MatrizEntrante[1][1]=2;
+        MatrizEntrante[1][2]=8;
+        MatrizEntrante[1][6]=8;
 
-        MatrizEntrante[2][0]=2;
-        MatrizEntrante[2][1]=-1;
-        MatrizEntrante[2][2]=1;
-        MatrizEntrante[2][6]=2;
+        MatrizEntrante[2][0]=7;
+        MatrizEntrante[2][1]=0;
+        MatrizEntrante[2][2]=4;
+        MatrizEntrante[2][6]=12;
 
-        MatrizEntrante[3][0]=1;
-        MatrizEntrante[3][1]=1;
-        MatrizEntrante[3][2]=3;
-        MatrizEntrante[3][6]=12;
+        MatrizEntrante[3][0]=0;
+        MatrizEntrante[3][1]=0;
+        MatrizEntrante[3][2]=0;
+        MatrizEntrante[3][6]=0;
         
         MatrizEntrante[1][3]=1;
         MatrizEntrante[2][4]=1;
         MatrizEntrante[3][5]=1;
-        */
     }
 }
