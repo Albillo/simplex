@@ -20,6 +20,7 @@ public class FXMLDocumentController implements Initializable {
     // Matriz global de dimencion 7 * 4
     double MatrizEntrante[][] = new double[4][7];
     double FilaPiboteEntrePuntoPibote[] = new double[7];
+    int filas = 0;
     
     // Añadimos texto al ComboBox
     private void SetTextCombo() {
@@ -39,7 +40,7 @@ public class FXMLDocumentController implements Initializable {
             Alerta("Selecciona una opcion.\nMaximizar o Minimizar");
             return;
         }
-//        if( ValidarTextos() )
+//        if( ValidarTextos() ){
             if("=<".equals(uno) || "=".equals(uno))
                 MatrizEntrante[1][3]=1;
             else
@@ -56,8 +57,8 @@ public class FXMLDocumentController implements Initializable {
             if("Maximizar".equals(seleccionado))
                 Maximizar();
             else
-                
                 Minimizar();
+//        }
             
     }
     
@@ -223,14 +224,34 @@ public class FXMLDocumentController implements Initializable {
             HayPositivoDos = MatrizEntrante[0][2] >= 0;
             HayPositivoTres = MatrizEntrante[0][3] >= 0;
         }
-
-        for(int i = 0; i < MatrizEntrante.length; i++){
-            if(MatrizEntrante[i][0] == 1)
-                System.out.print("X1: "+ MatrizEntrante[i][6]);
-            if(MatrizEntrante[i][1] == 1)
-                System.out.print("\tX2: "+ MatrizEntrante[i][6]);
-            if(MatrizEntrante[i][2] == 1)
-                System.out.print("\tX3: "+ MatrizEntrante[i][6]);
+        
+        // Valoramos que columnas tienen solo un 1, para saber que Xn imprimir
+        int UnSoloPostivoEnX1 = 0, UnSoloPostivoEnX2 = 0, UnSoloPostivoEnX3 = 0;
+        int posicionEnX1 = 0, posicionEnX2 = 0, posicionEnX3 = 0;
+        for(int i = 1; i < MatrizEntrante.length; i++){
+            if(MatrizEntrante[i][0] > 0){
+                UnSoloPostivoEnX1++;
+                posicionEnX1 = i;
+            }
+            if(MatrizEntrante[i][1] > 0){
+                UnSoloPostivoEnX2++;
+                posicionEnX2 = i;
+            }
+            if(MatrizEntrante[i][2] > 0){
+                UnSoloPostivoEnX3++;
+                posicionEnX3 = i;
+            }
+        }
+        
+        // Imprimimos los valos cullos en la columnas Xn solo contegan un 1
+        if(UnSoloPostivoEnX1 == 1){
+            System.out.print("\tX1: "+ round(MatrizEntrante[posicionEnX1][6], 3));
+        }
+        if(UnSoloPostivoEnX2 == 1){
+            System.out.print("\tX2: "+ round(MatrizEntrante[posicionEnX2][6], 3));
+        }
+        if(UnSoloPostivoEnX3 == 1){
+            System.out.print("\tX3: "+ round(MatrizEntrante[posicionEnX3][6], 3));
         }
         System.out.print("\tZ: "+ MatrizEntrante[0][6]);
     }
@@ -383,7 +404,7 @@ public class FXMLDocumentController implements Initializable {
         MatrizEntrante[3][2]=0;
         MatrizEntrante[3][6]=60;*/
         
-        // Maximizar
+        //* Maximizar*/
         MatrizEntrante[0][0]=2;
         MatrizEntrante[0][1]=1;
         MatrizEntrante[0][2]=3;
@@ -403,8 +424,24 @@ public class FXMLDocumentController implements Initializable {
         MatrizEntrante[3][2]=0;
         MatrizEntrante[3][6]=0;
         
-        MatrizEntrante[1][3]=1;
-        MatrizEntrante[2][4]=1;
-        MatrizEntrante[3][5]=1;
+        /* Otra de MAximizar
+        MatrizEntrante[0][0]=2;
+        MatrizEntrante[0][1]=2;
+        MatrizEntrante[0][2]=-3;
+
+        MatrizEntrante[1][0]=-1;
+        MatrizEntrante[1][1]=1;
+        MatrizEntrante[1][2]=1;
+        MatrizEntrante[1][6]=4;
+
+        MatrizEntrante[2][0]=2;
+        MatrizEntrante[2][1]=-1;
+        MatrizEntrante[2][2]=1;
+        MatrizEntrante[2][6]=2;
+
+        MatrizEntrante[3][0]=1;
+        MatrizEntrante[3][1]=1;
+        MatrizEntrante[3][2]=3;
+        MatrizEntrante[3][6]=12;*/
     }
 }
