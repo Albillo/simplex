@@ -76,15 +76,16 @@ public class FXMLDocumentController implements Initializable {
         while(HayPositivoUno != true || HayPositivoDos != true || HayPositivoTres != true ){
 
             // Obtenemos columna pibote
-            double mas_negativo = MatrizEntrante[0][0];
+            double mas_positivo = MatrizEntrante[0][0];
             for (int j = 0; j < MatrizEntrante.length; j++) {
                 
-                // Tomara el mayor positivo
-                if(MatrizEntrante[0][j] > mas_negativo){ // 
-                    mas_negativo = MatrizEntrante[0][j];
+                // Tomara el mayor negativo
+                if(MatrizEntrante[0][j] > mas_positivo){ // 
+                    mas_positivo = MatrizEntrante[0][j];
                     columna_pibote = j;
                 }
             }
+                        
             // Obtenemos fila pibote
             double menor = 999999999;
             for (int i = 0; i < MatrizEntrante.length; i++) {
@@ -100,7 +101,7 @@ public class FXMLDocumentController implements Initializable {
                     }
                 }
             }
-
+            
             // Nueva fila pibote
             for(int j = 0; j < MatrizEntrante[fila_pibote].length; j++)
                 FilaPiboteEntrePuntoPibote[j] = MatrizEntrante[fila_pibote][j] / MatrizEntrante[fila_pibote][columna_pibote];
@@ -133,19 +134,40 @@ public class FXMLDocumentController implements Initializable {
             }
             
             System.out.println("");
-            HayPositivoUno = MatrizEntrante[0][1] >= 0;
-            HayPositivoDos = MatrizEntrante[0][2] >= 0;
-            HayPositivoTres = MatrizEntrante[0][3] >= 0;
+            HayPositivoUno = MatrizEntrante[0][1] <= 0;
+            HayPositivoDos = MatrizEntrante[0][2] <= 0;
+            HayPositivoTres = MatrizEntrante[0][3] <= 0;
+        }
+        
+        // Valoramos que columnas tienen solo un 1, para saber que Xn imprimir
+        int UnSoloPostivoEnX1 = 0, UnSoloPostivoEnX2 = 0, UnSoloPostivoEnX3 = 0;
+        int posicionEnX1 = 0, posicionEnX2 = 0, posicionEnX3 = 0;
+        for(int i = 1; i < MatrizEntrante.length; i++){
+            if(MatrizEntrante[i][0] > 0){
+                UnSoloPostivoEnX1++;
+                posicionEnX1 = i;
+            }
+            if(MatrizEntrante[i][1] > 0){
+                UnSoloPostivoEnX2++;
+                posicionEnX2 = i;
+            }
+            if(MatrizEntrante[i][2] > 0){
+                UnSoloPostivoEnX3++;
+                posicionEnX3 = i;
+            }
+        }
+        
+        // Imprimimos los valos cullos en la columnas Xn solo contegan un 1
+        if(UnSoloPostivoEnX1 == 1){
+            System.out.print("\tX1: "+ round(MatrizEntrante[posicionEnX1][6], 3));
+        }
+        if(UnSoloPostivoEnX2 == 1){
+            System.out.print("\tX2: "+ round(MatrizEntrante[posicionEnX2][6], 3));
+        }
+        if(UnSoloPostivoEnX3 == 1){
+            System.out.print("\tX3: "+ round(MatrizEntrante[posicionEnX3][6], 3));
         }
 
-        for(int i = 0; i < MatrizEntrante.length; i++){
-            if(MatrizEntrante[i][0] == 1)
-                System.out.print("X1: "+ MatrizEntrante[i][6]);
-            if(MatrizEntrante[i][1] == 1)
-                System.out.print("\tX2: "+ MatrizEntrante[i][6]);
-            if(MatrizEntrante[i][2] == 1)
-                System.out.print("\tX3: "+ MatrizEntrante[i][6]);
-        }
         System.out.print("\tZ: "+ MatrizEntrante[0][6]);
     }
 
@@ -384,27 +406,27 @@ public class FXMLDocumentController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         SetTextCombo();
 
-        // Minimizar
-        /*MatrizEntrante[0][0]=-5;
-        MatrizEntrante[0][1]=-4;
-        MatrizEntrante[0][2]=0;
+        /* Minimizar*/
+        MatrizEntrante[0][0]=-3;
+        MatrizEntrante[0][1]=8;
+        MatrizEntrante[0][2]=1;
 
-        MatrizEntrante[1][0]=2;
-        MatrizEntrante[1][1]=2;
-        MatrizEntrante[1][2]=0;
-        MatrizEntrante[1][6]=14;
+        MatrizEntrante[1][0]=4;
+        MatrizEntrante[1][1]=1;
+        MatrizEntrante[1][2]=1;
+        MatrizEntrante[1][6]=13;
 
-        MatrizEntrante[2][0]=6;
+        MatrizEntrante[2][0]=2;
         MatrizEntrante[2][1]=3;
-        MatrizEntrante[2][2]=0;
-        MatrizEntrante[2][6]=36;
+        MatrizEntrante[2][2]=1;
+        MatrizEntrante[2][6]=16;
 
-        MatrizEntrante[3][0]=5;
-        MatrizEntrante[3][1]=10;
+        MatrizEntrante[3][0]=0;
+        MatrizEntrante[3][1]=0;
         MatrizEntrante[3][2]=0;
-        MatrizEntrante[3][6]=60;*/
+        MatrizEntrante[3][6]=0;
         
-        //* Maximizar*/
+        /* Maximizar
         MatrizEntrante[0][0]=2;
         MatrizEntrante[0][1]=1;
         MatrizEntrante[0][2]=3;
@@ -422,7 +444,7 @@ public class FXMLDocumentController implements Initializable {
         MatrizEntrante[3][0]=0;
         MatrizEntrante[3][1]=0;
         MatrizEntrante[3][2]=0;
-        MatrizEntrante[3][6]=0;
+        MatrizEntrante[3][6]=0;*/
         
         /* Otra de MAximizar
         MatrizEntrante[0][0]=2;
